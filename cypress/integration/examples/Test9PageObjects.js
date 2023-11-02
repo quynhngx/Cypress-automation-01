@@ -4,7 +4,6 @@ import HomePage from '../PageObjects/HomePage'
 import ProductPage from '../PageObjects/ProductPage'
 import CheckoutPage from '../PageObjects/CheckoutPage'
 
-
 //describe part "My First Test" is a test suite.
 describe('My First Test Suite', function () {
     before(function () {
@@ -19,7 +18,7 @@ describe('My First Test Suite', function () {
     })
 
     it('My First Test Case', function () {
-        Cypress.config('defaultCommandTimeout',8000)
+        Cypress.config('defaultCommandTimeout', 8000)
         const HomePage01 = new HomePage()
         const ProductPage01 = new ProductPage()
         const CheckoutPage01 = new CheckoutPage()
@@ -44,40 +43,35 @@ describe('My First Test Suite', function () {
             cy.selectProductToCart(element)
         })
 
-        var sum=0
+        var sum = 0
         ProductPage01.getCheckoutPage().click()
-        cy.get('tr td:nth-child(4) strong').each(($e1, index, $list) => 
-        {
-            const amountEachProduct = $e1.text()
-            const amount1 = amountEachProduct.split(" ")
-            const amount2 = amount1[1].trim()
-            sum=sum+parseInt(amount1[1])
-        }).then(function(){
+        cy.get('tr td:nth-child(4) strong')
+            .each(($e1, index, $list) => {
+                const amountEachProduct = $e1.text()
+                const amount1 = amountEachProduct.split(' ')
+                const amount2 = amount1[1].trim()
+                sum = sum + parseInt(amount1[1])
+            })
+            .then(function () {
                 cy.log(sum)
-        })
+            })
 
-        cy.get('h3 strong').then(function(total)
-        {
-            const totalStr = total.text().split(" ")
+        cy.get('h3 strong').then(function (total) {
+            const totalStr = total.text().split(' ')
             const totalAmount = totalStr[1].trim()
             expect(parseInt(totalAmount)).to.equal(sum)
         })
 
-
         CheckoutPage01.getCheckout().click()
 
         cy.get('input#country').type('Sweden')
-        Cypress.config('defaultCommandTimeout',8000)
+        Cypress.config('defaultCommandTimeout', 8000)
         cy.get('.suggestions > ul > li > a').click()
-        cy.get('input[type="checkbox"]').check({force: true})
+        cy.get('input[type="checkbox"]').check({ force: true })
         cy.get('input[type="submit"]').click()
-        cy.get('div.alert').should(($confirmMessage) =>
-        {
+        cy.get('div.alert').should(($confirmMessage) => {
             const message = $confirmMessage.text()
             expect(message).to.contains('Thank you!')
         })
-       
-        })
-
     })
-
+})
