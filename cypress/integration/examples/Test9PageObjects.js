@@ -46,19 +46,16 @@ describe('My First Test Suite', function () {
         var sum = 0
         ProductPage01.getCheckoutPage().click()
         cy.get('tr td:nth-child(4) strong')
-            .each(($e1, index, $list) => {
-                const amountEachProduct = $e1.text()
-                const amount1 = amountEachProduct.split(' ')
-                const amount2 = amount1[1].trim()
-                sum = sum + parseInt(amount1[1])
+            .each((item) => {
+                const itemAmount = item.text().split(' ')[1]
+                sum = sum + parseInt(itemAmount)
             })
             .then(function () {
                 cy.log(sum)
             })
 
         cy.get('h3 strong').then(function (total) {
-            const totalStr = total.text().split(' ')
-            const totalAmount = totalStr[1].trim()
+            const totalAmount = total.text().split(' ')[1].trim()
             expect(parseInt(totalAmount)).to.equal(sum)
         })
 
