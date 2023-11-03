@@ -7,7 +7,7 @@
 describe('Handling Child Windows', () => {
     it('Should handle child window', () => {
         //test step will go inside {}
-        cy.visit('https://rahulshettyacademy.com/AutomationPractice/') //navigate to a url
+        cy.visit(Cypress.env('url')+'/AutomationPractice/') //navigate to a url
 
         //tell Cypress that we are intentionally changing the domain by cy.origin()
         cy.get('#opentab').invoke('removeAttr', 'target').click()

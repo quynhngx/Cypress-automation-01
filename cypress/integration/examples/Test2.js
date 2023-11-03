@@ -7,8 +7,7 @@
 describe('My Second Test Suite', function () {
     it('My Second Test Case', function () {
         //test step will go inside {}
-
-        cy.visit('https://rahulshettyacademy.com/seleniumPractise/#/') //navigate to a url
+        cy.visit(Cypress.env('url')+'/seleniumPractise/#/') //navigate to a url
         cy.get('.search-keyword').type('ca') //get the locator presenting on a page and type "ca" into that locator
         cy.wait(2000) //to tell Cypress to wait because the test app has no clue of loading animation.
 

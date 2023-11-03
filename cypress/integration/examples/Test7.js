@@ -8,7 +8,7 @@
 describe('Handling Mouse Hover', () => {
     it('Handling Web tables with Cypress', () => {
         //test step will go inside {}
-        cy.visit('https://rahulshettyacademy.com/AutomationPractice/') //navigate to a url
+        cy.visit(Cypress.env('url')+'/AutomationPractice/') //navigate to a url
 
         // cy.get('.mouse-hover-content').invoke('show')
         cy.get('.mouse-hover-content a[href="#top"]').click({ force: true }) //try to click on hidden element without open the popup
