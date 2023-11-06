@@ -18,7 +18,7 @@ describe('My First Test Suite', function () {
     it('My First Test Case', function () {
         const HomePage01 = new HomePage()
 
-        cy.visit(Cypress.env('url')+'/angularpractice/')
+        cy.visit(Cypress.env('url') + '/angularpractice/')
         cy.get('div > input[name="name"]').type(this.data.name)
         cy.get('select').select(this.data.gender)
 

@@ -8,7 +8,7 @@ describe('My 4th Test Suite', function () {
     it('My 4th Test Case', function () {
         //test step will go inside {}
 
-        cy.visit(Cypress.env('url')+'/AutomationPractice/') //navigate to a url
+        cy.visit(Cypress.env('url') + '/AutomationPractice/') //navigate to a url
 
         //Handle alerts in app
         //Cypress automatically handles the alert/popup by automatically hitting "OK" button

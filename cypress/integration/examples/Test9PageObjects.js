@@ -22,8 +22,8 @@ describe('My First Test Suite', function () {
         const HomePage01 = new HomePage()
         const ProductPage01 = new ProductPage()
         const CheckoutPage01 = new CheckoutPage()
-        
-        cy.visit(Cypress.env('url')+'/angularpractice/')
+
+        cy.visit(Cypress.env('url') + '/angularpractice/')
         HomePage01.getEditBox().type(this.data.name)
         HomePage01.getGender().select(this.data.gender)
         HomePage01.getTwoWayBidingData().should(($inputElement) => {

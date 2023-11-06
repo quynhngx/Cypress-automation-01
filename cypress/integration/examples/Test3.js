@@ -8,7 +8,7 @@ describe('My Third Test Suite', function () {
     it('My Third Test Case', function () {
         //test step will go inside {}
 
-        cy.visit(Cypress.env('url')+'/AutomationPractice/') //navigate to a url
+        cy.visit(Cypress.env('url') + '/AutomationPractice/') //navigate to a url
 
         //AUTOMATION TEST WITH CHECKBOXES
 
