@@ -7,13 +7,12 @@
 describe('Handling Web tables', () => {
     it('Handling Web tables with Cypress', () => {
         //test step will go inside {}
-        cy.visit(Cypress.env('url')+'/AutomationPractice/') //navigate to a url
+        cy.visit(Cypress.env('url') + '/AutomationPractice/') //navigate to a url
         cy.get('tr td:nth-child(2)').each(($e1, index, $list) => {
             const text = $e1.text()
             if (text.includes('Python')) {
-                cy.get('tr td:nth-child()')
+                cy.get('tr td:nth-child(3)')
                     .eq(index)
-                    .next()
                     .then(function (price) {
                         const priceCourse = price.text()
                         expect(priceCourse).to.equal('25')
