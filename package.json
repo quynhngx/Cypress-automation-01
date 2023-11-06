@@ -4,7 +4,12 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "format": "prettier . --write"
+        "format": "prettier . --write",
+        "cy:run": ".//node_modules//.bin/cypress run",
+        "cy:open": "npm run cy:run -- --headed",
+        "cy:runHeadedChrome": "npm run cy:run -- --headed --browser chrome",
+        "cy:RecordTest": "npm run cy:run -- --record --key 359d1830-a95f-441b-8695-2b7981fba90a",
+        "cy:runSpec": "npm run cy:run -- --spec cypress/integration/examples/*.js"
     },
     "author": "",
     "license": "ISC",
@@ -12,5 +17,9 @@
         "cypress": "^13.2.0",
         "cypress-iframe": "^1.0.1",
         "prettier": "^3.0.3"
+    },
+    "dependencies": {
+        "@badeball/cypress-cucumber-preprocessor": "^19.0.1",
+        "@cypress/browserify-preprocessor": "latest"
     }
 }
