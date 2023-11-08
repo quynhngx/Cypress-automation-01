@@ -9,7 +9,8 @@
         "cy:open": "npm run cy:run -- --headed",
         "cy:runHeadedChrome": "npm run cy:run -- --headed --browser chrome",
         "cy:RecordTest": "npm run cy:run -- --record --key 359d1830-a95f-441b-8695-2b7981fba90a",
-        "cy:runSpec": "npm run cy:run -- --spec cypress/integration/examples/*.js"
+        "cy:runSpec": "npm run cy:run -- --spec cypress/integration/examples/*.js",
+        "cy:runCucumber": "npm run cy:run -- --spec cypress/integration/examples/BDD/*.feature --headed --browser chrome"
     },
     "author": "",
     "license": "ISC",
@@ -20,6 +21,7 @@
     },
     "dependencies": {
         "@badeball/cypress-cucumber-preprocessor": "^19.0.1",
-        "@cypress/browserify-preprocessor": "latest"
+        "@cypress/browserify-preprocessor": "latest",
+        "cypress": "latest"
     }
 }
