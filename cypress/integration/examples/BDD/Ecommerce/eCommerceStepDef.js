@@ -6,6 +6,7 @@ import HomePage from '../../../PageObjects/HomePage'
 import ProductPage from '../../../PageObjects/ProductPage'
 import CheckoutPage from '../../../PageObjects/CheckoutPage'
 
+let name
 const homePage = new HomePage()
 const productPage = new ProductPage()
 const checkoutPage = new CheckoutPage()
@@ -60,15 +61,16 @@ Then('Select the country, submit and verify Thankyou message', () => {
     })
 })
 
-When('I fill all the details into the form', () => {
-    homePage.getEditBox().type(cy.data.name)
-    homePage.getGender().select(cy.data.gender)
+When('I fill all the details into the form', (dataTable) => {
+    name = dataTable.rawTable[1][0]
+    homePage.getEditBox().type(dataTable.rawTable[1][0])
+    homePage.getGender().select(dataTable.rawTable[1][1])
 })
 
 Then('Validate the form behaviour', () => {
     homePage.getTwoWayBidingData().should(($inputElement) => {
         const NameBiding = $inputElement.val()
-        expect(NameBiding).to.equal(cy.data.name)
+        expect(NameBiding).to.equal(name)
     })
 
     homePage.getEditBox().should(($inputName) => {
