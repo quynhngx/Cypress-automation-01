@@ -9,4 +9,6 @@ This is a repo where contains all the code for my first practice on automation p
 - [x] find CSS locators to perform Cypress API when writing test
 - [x] basic assertion in writing tests with Cypress
 - [x] Cypress asynchronous nature and its promise handling
-- [x]  
+- [x] automation to handling alerts, popups, child windows
+- [x] Cypress fixtures and how to drive data from there
+- [x] implement page objects design pattern into Cypress
