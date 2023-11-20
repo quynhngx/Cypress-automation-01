@@ -34,3 +34,22 @@ Cypress.Commands.add('selectProductToCart', (ProductName) => {
         }
     })
 })
+
+//Custom LoginAPI command to extract the response token using Cypress
+Cypress.Commands.add('LoginAPI',() => {
+cy.request({
+    method: 'POST',
+    url: 'https://rahulshettyacademy.com/api/ecom/auth/login',
+    body: {
+      "userEmail": "quynh.nguyenxuan131@gmail.com",
+      "userPassword": "Potato@0201"
+    }
+}).then(function (response) {
+        // expect(response.status).to.eq(200);
+        Cypress.env('token', response.body.token)
+        cy.log(response.body)
+    })
+    
+})
+
+
