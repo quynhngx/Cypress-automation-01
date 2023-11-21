@@ -18,7 +18,8 @@
         "cypress": "^13.2.0",
         "cypress-iframe": "^1.0.1",
         "multiple-cucumber-html-reporter": "^3.5.0",
-        "prettier": "^3.0.3"
+        "prettier": "^3.0.3",
+        "neat-csv": "5.1.0"
     },
     "dependencies": {
         "@badeball/cypress-cucumber-preprocessor": "^19.0.1",
