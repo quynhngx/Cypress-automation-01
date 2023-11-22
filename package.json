@@ -15,16 +15,17 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "cypress": "^13.2.0",
+        "cypress": "^13.6.0",
         "cypress-iframe": "^1.0.1",
+        "cypress-sql-server": "^1.0.0",
         "multiple-cucumber-html-reporter": "^3.5.0",
-        "prettier": "^3.0.3",
-        "neat-csv": "5.1.0"
+        "neat-csv": "5.1.0",
+        "prettier": "^3.0.3"
     },
     "dependencies": {
         "@badeball/cypress-cucumber-preprocessor": "^19.0.1",
         "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
         "@cypress/browserify-preprocessor": "latest",
-        "cypress": "latest"
+        "convert-excel-to-json": "^1.7.0"
     }
 }
