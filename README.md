@@ -46,9 +46,9 @@ Package.json file is a JSON file that exists at the root of a JavaScript/Node pr
 
 ***Steps to create it***
 ```sh
-mkdir CypressAutomation (this command helps to create a new folder)
-cd CypressAutomation (this command helps you go inside the CypressAutomation folder)
-npm -i init (this command helps you to create package.json file and keep hitting Enter for receiving the default values)
+mkdir CypressAutomation //this command helps to create a new folder
+cd CypressAutomation //this command helps you go inside the CypressAutomation folder
+npm -i init //this command helps you to create package.json file and keep hitting Enter for receiving the default values
 ```
 
 ***Install Cypress and make an entry for it in package.json***
