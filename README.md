@@ -86,7 +86,7 @@ npx cypress run --headed --browser chrome //run on Chrome browser for example
 
 **Command for running all the files**
 ```sh
-npx cypress run --headed --browser chrome --
+npx cypress run --headed --browser chrome
 ```
 Note: Remember to config the spec pattern in cypress.config.js file first, for example you want to run all the files with extension `.js` in cypress\integration\examples folder, config inside the section `e2e`
 
