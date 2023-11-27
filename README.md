@@ -113,7 +113,7 @@ Cypress Cloud is a place where tester can view and debug past test results from 
  
 ```sh
 module.exports = {
-projectID: "ngijqu"
+projectID: "ngijqu" //projectID here is just an example
 }
 ```
 
