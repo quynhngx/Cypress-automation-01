@@ -1,7 +1,7 @@
 # Cypress-automation-begin
 This is a repo where contains all the code for my first practice on automation project using Cypress framework.
 
-## What I have learned
+## I/What I have learned
 - [x] understand Cypress definition, its architecture and its benefits
 - [x] how to install Node.js, VS Code, Cypress and set up project
 - [x] know about Cypress Test runner
@@ -15,7 +15,7 @@ This is a repo where contains all the code for my first practice on automation p
 - [x] practice Cypress Cucumber practice integration
 - [x] mock https request & response using Cypress intercept
 
-## I/ Deep dive into each learning part ###
+## II/ Deep dive into each learning part ###
 ### 1/ What is Cypress? What is its architecture and its benefits? ####
 - Definitions
     - Cypress framework is a JavaScript-based end-to-end testing framework. 
