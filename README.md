@@ -165,6 +165,52 @@ cy.get('a p:nth-last-child(2)') //Selects every <p> element that is the second c
 
 **NOTE**: You can add extension ChroPath or SelectorsHub to the browser to verify CSS selectors first to see how many elements matching with selectors OR you can take advantage of Cypress Runner to inspect the elements but it is not recommended.
 
+### 4/ Common Cypress Queries and Assertions API
+
+***Describe the test suite for each spec file***
+```sh
+describe('My First Test Suite', function () { ////describe part "My First Test" is a test suite.
+    it('My First Test Case', function () {
+     //test step will go inside {} here
+        })
+})     
+```
+
+***Visit a page***
+```sh
+describe('My First Test Suite', function () {
+it('My First Test Case', function () {
+cy.visit('https://www.google.com') //url will be wrapped inside single quotes
+})
+})
+```
+
+***Query for an element***
+```sh
+describe('My First Test Suite', function () {
+it('My First Test Case', function () {
+cy.visit('https://www.google.com');
+cy.get('.button-cfm') //CSS locators being stated at no.3 above
+})
+})
+```
+OR
+*When finding in a page in which it contains specific text*
+
+```sh
+describe('My First Test Suite', function () {
+it('My First Test Case', function () {
+cy.visit('https://www.google.com');
+cy.contains('text');
+```
+
+**NOTE**: Difference between cy.get() and .find() in Cypress
+    - cy.get() is used to get the specific selector.
+    - .find() is used to get the descendent DOM elements of a specific selector. .find() cannot be chained off cy
+    - For example:
+    ```sh
+    cy.get('@productLocator').find('.product') //find product within productLocator
+    ```
 
 
 
