@@ -195,6 +195,7 @@ describe('My First Test Suite', function () {
 })
 ```
 OR
+
 *When finding in a page in which it contains specific text*
 
 ```sh
@@ -206,15 +207,37 @@ describe('My First Test Suite', function () {
 
 **NOTE**: Difference between cy.get() and .find() in Cypress
 
-    - cy.get() is used to get the specific selector.
-    - .find() is used to get the descendent DOM elements of a specific selector. .find() cannot be chained off cy
-    - For example:
+- cy.get() is used to get the specific selector.
+- .find() is used to get the descendent DOM elements of a specific selector. .find() cannot be chained off cy
+- For example:
 
 ```sh
 cy.get('@productLocator').find('.product') //find product within productLocator
 ```
+***Click an element and type in an element***
 
+Click an element
+```sh
+describe('My First Test Suite', function () {
+    it('My First Test Case', function () {
+        cy.visit('https://www.google.com');
 
+        //find an element which contains "text" and click it
+        cy.contains('text').click()
+```
+
+Type something in an element
+```sh
+describe('My First Test Suite', function () {
+    it('My First Test Case', function () {
+        cy.visit('https://www.google.com');
+
+        //Get the search input field and type "product" in it
+        cy.get('.search-product').type('product')
+```
+***Basic Assertions API***
+
+Assertion describes the desired state of your elements, your objects, and your application.
 
   
           
