@@ -179,8 +179,8 @@ describe('My First Test Suite', function () { ////describe part "My First Test" 
 ***Visit a page***
 ```sh
 describe('My First Test Suite', function () {
-it('My First Test Case', function () {
-cy.visit('https://www.google.com') //url will be wrapped inside single quotes
+    it('My First Test Case', function () {
+        cy.visit('https://www.google.com') //url will be wrapped inside single quotes
 })
 })
 ```
@@ -188,9 +188,9 @@ cy.visit('https://www.google.com') //url will be wrapped inside single quotes
 ***Query for an element***
 ```sh
 describe('My First Test Suite', function () {
-it('My First Test Case', function () {
-cy.visit('https://www.google.com');
-cy.get('.button-cfm') //CSS locators being stated at no.3 above
+    it('My First Test Case', function () {
+        cy.visit('https://www.google.com');
+        cy.get('.button-cfm') //CSS locators being stated at no.3 above
 })
 })
 ```
@@ -199,18 +199,20 @@ OR
 
 ```sh
 describe('My First Test Suite', function () {
-it('My First Test Case', function () {
-cy.visit('https://www.google.com');
-cy.contains('text');
+    it('My First Test Case', function () {
+        cy.visit('https://www.google.com');
+        cy.contains('text');
 ```
 
 **NOTE**: Difference between cy.get() and .find() in Cypress
+
     - cy.get() is used to get the specific selector.
     - .find() is used to get the descendent DOM elements of a specific selector. .find() cannot be chained off cy
     - For example:
-    ```sh
-    cy.get('@productLocator').find('.product') //find product within productLocator
-    ```
+
+```sh
+cy.get('@productLocator').find('.product') //find product within productLocator
+```
 
 
 
