@@ -264,6 +264,78 @@ cy.get('#checkBoxOption1').check().should('be.checked') //assert if a checkbox i
 cy.get('#checkBoxOption1').uncheck().should('not.be.checked') //assert if a checkbox is unchecked
 ```
 
+### 5/ Asynchronous nature of Cypress
+- Definition for both synchronous and asynchronous
+    - In synchronous process, tasks are executed in a sequential and blocking manner. Each task must wait for another task finishes before it starts.
+    - In asynchronous process, tasks can overlap or run independently of one another. An operation doesn't need to wait for the previous one to finish before starting.
+
+- Asynchronous nature of Cypress
+    - Cypress is asynchronous nature and it has a mechanism that if you concatenate one command with another Cypress command, then Cypress understands that both Cypress can translate and return a promise. (*Promise is a state of step executed. Promises come in 3 results: rejection, resolved, pending.*)
+    - Cypress commands **DO NOT** return their subjects.
+```js
+const abc = cy.get('.classname'); //actually you cannot do this because Cypress doesn't return the object
+abc.click()
+```
+
+- Instead, Cypress commands yield their subjects. Meaning their subjects are yielded from one command to the next and wait to be executed.
+
+    
+```js
+// Visiting a web page with a form
+cy.visit('https://example.com');
+
+// Typing text into an input field
+cy.get('input[name="username"]').type('john_doe');
+
+// The subject (input field) is automatically yielded to the next command
+// Now, we can perform additional actions on the same input field
+cy.get('input[name="password"]').type('secretpassword');
+```
+
+- When you use a Cypress command, such as **cy.get()** or **cy.click()**, it returns a special object representing the subject of the command. The **.then()** method allows you to perform additional actions on this subject.
+```js
+cy.get('.my-element').then((element) => {
+  // 'element' here is the subject yielded by cy.get()
+  // Perform additional actions with the subject by using cy.wrap()
+  cy.wrap(element).should('have.class', 'active');
+});
+```
+
+### 6/ Cypress framework
+#### 6.1/ Retrieve data from Cypress fixtures (data-driven test)
+- Cypress is providing Fixtures as a feature to drive data from external sources. Input data under **fixtures** folder, inside the file which can be named example.json
+```js
+{
+    "name": "Potato",
+    "gender": "Male",
+    "ProductName": ["Blackberry", "Nokia Edge", "iphone X"]
+}
+```
+- Retrieve data from **fixtures** before you write down test steps inside **it**
+- Run fixtures before all tests run by using **before** hook
+
+```js
+describe('My First Test Suite', function () {
+    before(function () {
+        // runs once before all tests
+        //get access to the example.json file and resolve a promise by then method
+        cy.fixture('example').then(function(data)
+        {
+        this.data = data
+        })
+        //"this.data" is a variable that can be accessed for the whole file. "Data" only can be accessed inside the "before" loop
+        })
+    })
+it('My First Test Case', function () {
+
+        cy.visit('https://www.abc.com')
+        cy.get('div > input[name="name"]').type(this.data.name) //will be "Potato"
+        cy.get('select').select(this.data.gender) //will be "Male"
+})
+})
+
+```
+
 
   
           
