@@ -337,6 +337,119 @@ it('My First Test Case', function () {
 ```
 
 
+#### 6.2/ Implement Page Objects
+***What can Page Objects help with?***
+- If an element is changed, the tester has to go to update the selectors from all the places where the selector was used.
+- With Page Objects, the tester can only go to a central place and update once.
+- So the Page Object Model (POM) is **a design pattern** used in software development where **classes represent pages**. POM can make code more maintainable and reduce duplication.
+    
+***How to create Page Objects?***
+- Let's say you want to write some methods that will give you access to each input field (red circle in the below image) in this Homepage
+- The page I'm referring is a demo page for testing, https://rahulshettyacademy.com/angularpractice/
+<img width="925" alt="ProtoCommerce" src="https://github.com/quynhngx/Cypress-automation-begin/assets/148571917/e66b63b3-5f9b-403e-8302-3a2a1e51967c">
+
+
+**Let's write our first class of Homepage**
+
+  
+```js
+
+class HomePage {
+    getEditBox() { 
+        return cy.get('div > input[name="name"]')
+    }
+
+    getTwoWayBidingData() {
+        return cy.get('input[name="name"]:nth-child(1)')
+    }
+
+    getGender() {
+        return cy.get('select')
+    }
+
+    getEntrepreneur() {
+        return cy.get('#inlineRadio3')
+    }
+
+    getShopTab() {
+        return cy.get('a[href="/angularpractice/shop"]')
+    }
+}
+export default HomePage //export Homepage and then import to the file you want to use
+```
+
+
+**Now let's write test using Page Objects**
+
+```js
+/// <reference types="Cypress" />
+import HomePage from '../PageObjects/HomePage' //remember to import Homepage to this file
+describe('My First Test Suite', function () {
+    it('My First Test Case', function () {
+        const HomePage01 = new HomePage() //create object for class
+
+        cy.visit(Cypress.env('url') + '/angularpractice/')
+        HomePage01.getEditBox().type("Potato")
+        HomePage01.getGender().select(Male)
+        HomePage01.getTwoWayBidingData().should(($inputElement) => {
+            const NameBiding = $inputElement.val()
+            expect(NameBiding).to.equal("Potato")
+        })
+})
+})
+```
+
+ 
+
+
+#### 6.3/ Customed commands
+- The **commands.js** file lets you write your custom commands so you can use or reuse them later in your tests. This file also lets you overwrite the existing commands. You can write customed commands inside the file support/commands.js
+
+**Before writing customed commands**
+
+You write a bunch lines of code to add a product to cart again and again
+
+```js
+describe('My First Test Suite', function () {
+
+it('Add a product to cart', function () {
+cy.get('h4.card-title').each(($e1, index, $list) => {
+        if ($e1.text().includes(iPhone)) { //add iPhone to cart
+            cy.get('.card-footer').eq(index).click()
+            })
+
+cy.get('h4.card-title').each(($e1, index, $list) => {
+        if ($e1.text().includes(Blackberry)) { //add Blackberry to cart
+            cy.get('.card-footer').eq(index).click()
+            }
+    })
+cy.get('h4.card-title').each(($e1, index, $list) => {
+        if ($e1.text().includes(Samsung)) { //add Samsung to cart
+             cy.get('.card-footer').eq(index).click()
+            }
+            })
+        })
+    })
+})
+```
+
+**After writing customed commands**
+
+Optimize by writing customed command inside supports/commands.js
+```js
+Cypress.Commands.add('AddProductToCart', (productName) => { //send argument to the function
+    if ($e1.text().includes(productName)) { 
+        cy.get('.card-footer').eq(index).click()
+})
+```
+then code will be used like below
+
+```js
+cy.AddProductToCart(Samsung)
+```
+
+
+
   
           
           
