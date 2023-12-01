@@ -447,7 +447,47 @@ then code will be used like below
 ```js
 cy.AddProductToCart(Samsung)
 ```
+### 7/ Data-driven testing
+#### 7.1/ Retrieve data from Excel file
+#### 7.2/ Retrieve data from CSV file
 
+**Setup plugin neat-csv into package.json**
+
+```js
+"devDependencies": {
+"neat-csv": "5.1.0",
+}
+```
+
+then do npm install to install new added dependency
+
+```sh
+npm install
+```
+
+**Import neat-csv into working file**
+
+```js
+const neatCSV = require('neat-csv')
+```
+
+**Read csv file, field its content**
+```js
+//Cypress.config("fileServerFolder") is used to retrieve the configuration setting for the folder where Cypress serves static files.
+// a pair of "async" & "await" is used because it tells below codes that they have to wait for csv text before continuing.
+cy.readFile(Cypress.config("fileServerFolder")+"/cypress/downloads/order-invoice_quynh.nguyenxuan131 (4).csv").then(async (text) =>
+    {
+        const csv = await neatCSV(text)
+        console.log(csv)
+        const productNameCSV = csv[0]["Product Name"] //access the value of property "Product Name" in 0th index array.
+        console.log(productNameCSV)
+        cy.get('.input-form').type(productNameCSV) //retrieve text from csv file to fill it in the form
+    })
+```
+
+
+
+#### 7.3/ Retrieve data from SQL database
 
 
   
