@@ -449,6 +449,50 @@ cy.AddProductToCart(Samsung)
 ```
 ### 7/ Data-driven testing
 #### 7.1/ Retrieve data from Excel file
+
+**Install convert-excel-to-json dependency** (from link, https://www.npmjs.com/package/convert-excel-to-json)
+```sh
+npm i convert-excel-to-json
+```
+
+Check in package.json file whether it has that plugin. It might look like this.
+
+```js
+"dependencies": {
+        "convert-excel-to-json": "^1.7.0"
+    }
+```
+
+**Create a task to execute reading Excel file in Node. It is created in config.js**
+
+
+The reason why you cannot use the code `source: fs.readFileSync(filePath)` directly is because this is run under Node engine (backend) so Cypress (which run from frontend) will not understand what it is. So you have to write these under `task`. 
+
+```js
+    on('task',
+    {
+        ExceltoJsonConverter(filePath) //create "ExceltoJsonConverter" as a task name
+        {
+            const result = excelToJson({
+            source: fs.readFileSync(filePath) 
+            });
+        return result;
+        }
+    })
+```
+
+**Call task which you have just made in the current working file**
+```js
+const filePath = Cypress.config("fileServerFolder")+"/cypress/downloads/order-invoice_quynh.nguyenxuan131.xlsx"
+    cy.task('ExceltoJsonConverter',filePath).then(function(result) //filePath is the argument of this function.
+    {
+        cy.log(result)
+        expect(actualProduct).to.equal(result.data[1].B) //it wil stop at the index 1 from an array named "data", then retrieve the value of property named "B"
+    })
+```
+
+
+
 #### 7.2/ Retrieve data from CSV file
 
 **Setup plugin neat-csv into package.json**
@@ -465,13 +509,13 @@ then do npm install to install new added dependency
 npm install
 ```
 
-**Import neat-csv into working file**
+**Import neat-csv into the current working file**
 
 ```js
 const neatCSV = require('neat-csv')
 ```
 
-**Read csv file, field its content**
+**Read csv file, use its content**
 ```js
 //Cypress.config("fileServerFolder") is used to retrieve the configuration setting for the folder where Cypress serves static files.
 // a pair of "async" & "await" is used because it tells below codes that they have to wait for csv text before continuing.
