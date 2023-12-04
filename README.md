@@ -551,7 +551,68 @@ cy.readFile(Cypress.config("fileServerFolder")+"/cypress/downloads/order-invoice
 **Create a table in Database**
 - Go to your database
 - Choose option "Query editor (preview)" from the left menu
-- Login to the server
+- Login to the server and create a SQL table
+
+
+<img width="836" alt="cypressdata__quynhautomation_cypressdata__-_Microsoft_Azure" src="https://github.com/quynhngx/Cypress-automation-begin/assets/148571917/3353f151-97fb-4f23-ade5-2a2042b7a416">
+
+
+
+
+**Add cypress-sql-server plugin**
+- Go to this link, https://www.npmjs.com/package/cypress-sql-server to get the instructions
+- Install the plugin as below command
+  
+```sh
+npm install --save-dev cypress-sql-server
+```
+
+- Register the plugin in your project in cypress.config.js and under `setupNodeEvents`
+
+```js
+
+const sqlServer = require('cypress-sql-server'); //import the package
+async function setupNodeEvents(on, config) {
+
+//config.db where you will all the information of the database for Cypress to connect
+    config.db = {
+        userName: "loginname", //the login name to SQL server
+        password: "password", //Password
+        server: "server.database.windows.net", //server name
+        options: {
+            database: "quynhngcypress",
+            encrypt: true,
+            rowCollectionOnRequestCompletion : true
+        }
+    }
+
+    tasks = sqlServer.loadDBPlugin(config.db);
+    on('task', tasks)
+})
+
+```
+
+- Load customed commands inside support/e2e.js
+```js
+import sqlServer from 'cypress-sql-server';
+sqlServer.loadDBCommands();
+```
+
+
+**Retrieve data from SQL database into Cypress**
+```js
+/// <reference types="Cypress" />
+
+describe('SQL database access', function () {
+    it('Access data from server into Cypress', function () {
+    
+        cy.sqlServer('select * from Woman').then(function(result) //'select * from Woman' is the query to return data
+        {
+            console.log(result[0][2]) // result will be "Quynh"
+        })
+    })
+})
+```
 
 
 
