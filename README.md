@@ -533,6 +533,27 @@ cy.readFile(Cypress.config("fileServerFolder")+"/cypress/downloads/order-invoice
 
 #### 7.3/ Retrieve data from SQL database
 
+**Setup SQL server through Azure Portal**
+- Go to this link, https://azure.microsoft.com/en-gb/free/sql-on-azure to setup SQL server for free
+- You signin to Microsoft page
+- Choose free subscription for your first setup
+- From Microsoft Azure Homepage, choose `Create a resource`
+<img width="1463" alt="Home_-_Microsoft_Azure" src="https://github.com/quynhngx/Cypress-automation-begin/assets/148571917/80b7776d-3993-49a8-9b25-9d72a8ccb07b">
+
+- Choose option "Create SQL Database"
+  
+- Fill the form (don't forget to create server for the database and choose option "Use SQL authentication" in Authentication Method)
+<img width="792" alt="Create_SQL_Database_Server_-_Microsoft_Azure" src="https://github.com/quynhngx/Cypress-automation-begin/assets/148571917/06ba2417-e71e-4e48-94f9-12f5c30cc150">
+
+
+- Then create it to finish (The deployment might take some times to finish ^^)
+
+**Create a table in Database**
+- Go to your database
+- Choose option "Query editor (preview)" from the left menu
+- Login to the server
+
+
 
   
           
