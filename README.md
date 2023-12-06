@@ -12,7 +12,7 @@ This is a repo where contains all the code for my first practice on automation p
 - [x] automation to handling alerts, popups, child windows
 - [x] Cypress framework (how to retrieve data from Cypress fixtures, implement page objects, customed commands)
 - [x] data-driven testing, retrieve data for testing from SQL database, CSV file, and Excel file
-- [x] practice Cypress Cucumber practice integration
+- [x] practice Cypress Cucumber integration
 - [x] mock https request & response using Cypress intercept
 
 ## II/ Deep dive into each learning part ###
@@ -614,9 +614,176 @@ describe('SQL database access', function () {
 })
 ```
 
+### 8/ Cypress BDD Cucucumber framework integration
+
+#### 8.1/ Definition of BDD & Cucumber
+- BDD is short for Behavior-Driven Development.
+- It is an approach to write down business requirements. It helps describe behavior of system from business's point of view.
+- The requirement writing followed by this approach will be human-readable and can be shared among team (Product Owner, Business Analyst, Tester and Developers)
+- And what is Cucumber? Cucumber is a BDD framework. It is a tool that supports BDD. Cucumber is written in a language called Gherkin.
+- There are 2 types of file in Cucumber
+    - Feature file is a file which describes a bunch of test cases. There are some keywords that being used in feature file, for example, `Feature`, `Scenario`, `Given`, `When`, and `Then`. These feature files usually have a `.feature` extension.
+    - Step definition file is the actual code implementations that correspond to the steps in the feature files. Step definitions translate the natural language descriptions into executable code.
 
 
-  
+#### 8.2/ Plugin Cucumber and write stuffs (feature files & step definition)
+
+**Plugin Cucumner into Cypress**
+- Install Cucumber referring from this link, https://github.com/badeball/cypress-cucumber-preprocessor
+- Run this command
+```sh
+npm install @badeball/cypress-cucumber-preprocessor
+```
+
+- Go to package.json to check if the Cucumber package is there or not
+
+```js
+ "dependencies": {
+        "@badeball/cypress-cucumber-preprocessor": "^19.0.1",
+        "@cypress/browserify-preprocessor": "latest"
+    }
+```
+
+
+- Register Cucumber plugin under `setupNodeEvents` in cypress.config.js
+
+```js
+//import 2 details (CucumberPreprocessor and browserify to run JS code)
+const {
+    addCucumberPreprocessorPlugin,
+} = require('@badeball/cypress-cucumber-preprocessor')
+const {
+    preprocessor,
+} = require('@badeball/cypress-cucumber-preprocessor/browserify')
+
+
+ e2e: {
+        specPattern: 'cypress/integration/examples/*.js',
+        setupNodeEvents,
+            await addCucumberPreprocessorPlugin(on, config)
+            on('file:preprocessor', preprocessor(config));
+    },
+
+```
+
+
+**Write a feature file**
+- Go to install Cucumber (Gherkin) full support to Cypress. This will support `.feature` extension in your Visual Studio Code. (link: https://shorturl.at/eguW3)
+- Create a folder, then create a `.feature` file to write.
+- **NOTE**: It is very important to indent/do line spacing between sentences in feature file
+
+
+```feature
+Feature: End-to-end Ecommerce validation //describe a test suite
+
+    Regression Testing
+    @Regression
+    Scenario: Ecommerce products delivery //describe a test case
+        Given I open Ecommerce page //prerequisition
+        When I add items into Cart    //action that user performs
+        And Validate the total prices //`And` is below `When` mean user performs another action
+        Then Select the country, submit and verify Thankyou message //the output after the action of user
+```
+
+**Write a step definition file**
+- It is an actual implementation.
+- **NOTE**:
+    - The `.feature` file will use steps definition from a directory with the same name as your `.feature` file.
+    - There is no keyword `And` when writing step definition. So example, if `And` is used below `When` in feature file, write `When` (then your code) and then another `When` (then your code).
+- Don't forget to import keywords `Given, When, Then` into the step definition file
+- I inherit the code from what I wrote about on Cypress Framework session.
+
+
+```js
+import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor'
+import HomePage from '../../../PageObjects/HomePage'
+import ProductPage from '../../../PageObjects/ProductPage'
+import CheckoutPage from '../../../PageObjects/CheckoutPage'
+
+let name
+const homePage = new HomePage()
+const productPage = new ProductPage()
+const checkoutPage = new CheckoutPage()
+
+beforeEach(() => {
+    cy.fixture('example').then(function (exampleData) {
+        cy.data = exampleData
+    })
+})
+
+
+
+//Match the step from `.feature` file and pass it as the first argument and then define the actual function
+Given('I open Ecommerce page', () => {
+    cy.visit(Cypress.env('url') + '/angularpractice/')
+})
+
+When('I add items into Cart', () => {
+    homePage.getShopTab().click()
+    cy.data.ProductName.forEach((element) => {
+        cy.selectProductToCart(element)
+    })
+})
+
+When('Validate the total prices', () => {
+    var sum = 0
+    productPage.getCheckoutPage().click()
+    cy.get('tr td:nth-child(4) strong')
+        .each((item) => {
+            const itemAmount = item.text().split(' ')[1]
+            sum = sum + parseInt(itemAmount)
+        })
+        .then(function () {
+            cy.log(sum)
+        })
+
+    cy.get('h3 strong').then(function (total) {
+        const totalAmount = total.text().split(' ')[1].trim()
+        expect(parseInt(totalAmount)).to.equal(sum)
+    })
+})
+
+Then('Select the country, submit and verify Thankyou message', () => {
+    checkoutPage.getCheckout().click()
+
+    cy.get('input#country').type('Sweden')
+    Cypress.config('defaultCommandTimeout', 8000)
+    cy.get('.suggestions > ul > li > a').click()
+    cy.get('input[type="checkbox"]').check({ force: true })
+    cy.get('input[type="submit"]').click()
+    cy.get('div.alert').should(($confirmMessage) => {
+        const message = $confirmMessage.text()
+        expect(message).to.contains('Thank you!')
+    })
+})
+```
+
+
+#### 8.3/ Data-driven testing from Cucumber table
+
+- I have a feature file with a data table like below
+
+```feature
+    Scenario: Filling the form to shop
+        Given I open Ecommerce page
+        When I fill all the details into the form
+            | name      | gender |
+            | Khoai Tay | Female |
+        Then Validate the form behaviour
+        And Click Shop page
+```
+
+- Write step definition file to retrieve data from table table (I will write the `When` step only)
+
+```js
+When (`I fill all the details into the form`, function (dataTable)
+    {
+        //the method dataTable.rawdata will convert dataTable into 2 dimensional array
+        cy.get(.name-field).type(dataTable.rawdata[1][0]) //this will retrieve the second row (element with the first index) and the first value
+        cy.get(.gender-field).type(dataTable.rawdata[1][1])
+    })
+```
+
           
           
 
