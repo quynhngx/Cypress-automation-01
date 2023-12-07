@@ -9,16 +9,13 @@ This is a repo where contains all the code for my first practice on automation p
 - [x] find CSS locators to perform Cypress API when writing test
 - [x] basic assertion in writing tests with Cypress
 - [x] Cypress asynchronous nature and its promise handling
-- [x] automation to handling alerts, popups, child windows
 - [x] Cypress framework (how to retrieve data from Cypress fixtures, implement page objects, customed commands)
 - [x] data-driven testing, retrieve data for testing from SQL database, CSV file, and Excel file
 - [x] practice Cypress Cucumber integration
-- [x] mock https request & response using Cypress intercept
 
 ## II/ Deep dive into each learning part ###
 ### 1/ What is Cypress? What is its architecture and its benefits? ####
 - Definitions
-    - Cypress framework is a JavaScript-based end-to-end testing framework. 
     - Cypress framework is a JavaScript-based end-to-end testing framework. 
     - Cypress is Frontend automation testing tool and it is built for web applications.
     - Cypress is built on Node.js and comes packaged as a npm module.
@@ -81,13 +78,9 @@ npx cypress run --headless //run on headless mode
 ```
 
 ```js
-npx cypress run --headed --browser chrome //run on Chrome browser for example
+npx cypress run --headed --browser chrome //run all the spec files on Chrome browser for example
 ```
 
-**Command for running all the files**
-```js
-npx cypress run --headed --browser chrome
-```
 **NOTE**: Remember to config the spec pattern in cypress.config.js file first, for example you want to run all the files with extension `.js` in cypress\integration\examples folder, config inside the section `e2e`
 
 ```js
@@ -303,7 +296,7 @@ cy.get('.my-element').then((element) => {
 
 ### 6/ Cypress framework
 #### 6.1/ Retrieve data from Cypress fixtures (data-driven test)
-- Cypress is providing Fixtures as a feature to drive data from external sources. Input data under **fixtures** folder, inside the file which can be named example.json
+- Cypress is providing Fixtures as a feature to drive data from external sources. Input data under **fixtures** folder, inside the example.json file.
 ```js
 {
     "name": "Potato",
@@ -339,8 +332,7 @@ it('My First Test Case', function () {
 
 #### 6.2/ Implement Page Objects
 ***What can Page Objects help with?***
-- If an element is changed, the tester has to go to update the selectors from all the places where the selector was used.
-- With Page Objects, the tester can only go to a central place and update once.
+- If an element is changed, the tester has to go to update the selectors from all the places where the selector was used. With Page Objects, the tester can only go to a central place and update once.
 - So the Page Object Model (POM) is **a design pattern** used in software development where **classes represent pages**. POM can make code more maintainable and reduce duplication.
     
 ***How to create Page Objects?***
@@ -403,7 +395,7 @@ describe('My First Test Suite', function () {
 
 
 #### 6.3/ Customed commands
-- The **commands.js** file lets you write your custom commands so you can use or reuse them later in your tests. This file also lets you overwrite the existing commands. You can write customed commands inside the file support/commands.js
+- The **commands.js** file lets you write your customed commands so you can use or reuse them later in your tests. This file also lets you overwrite the existing commands. You can write customed commands inside the file **support/commands.js**
 
 **Before writing customed commands**
 
@@ -435,9 +427,10 @@ cy.get('h4.card-title').each(($e1, index, $list) => {
 
 **After writing customed commands**
 
-Optimize by writing customed command inside supports/commands.js
+Optimize by writing customed command inside **supports/commands.js**
 ```js
 Cypress.Commands.add('AddProductToCart', (productName) => { //send argument to the function
+    cy.get('h4.card-title').each(($e1, index, $list) => { 
     if ($e1.text().includes(productName)) { 
         cy.get('.card-footer').eq(index).click()
 })
@@ -459,7 +452,7 @@ Check in package.json file whether it has that plugin. It might look like this.
 
 ```js
 "dependencies": {
-        "convert-excel-to-json": "^1.7.0"
+    "convert-excel-to-json": "^1.7.0"
     }
 ```
 
@@ -499,7 +492,7 @@ const filePath = Cypress.config("fileServerFolder")+"/cypress/downloads/order-in
 
 ```js
 "devDependencies": {
-"neat-csv": "5.1.0",
+    "neat-csv": "5.1.0",
 }
 ```
 
@@ -618,7 +611,7 @@ describe('SQL database access', function () {
 
 #### 8.1/ Definition of BDD & Cucumber
 - BDD is short for Behavior-Driven Development.
-- It is an approach to write down business requirements. It helps describe behavior of system from business's point of view.
+- It is an approach to write business requirements. It helps describe behavior of system from business's point of view.
 - The requirement writing followed by this approach will be human-readable and can be shared among team (Product Owner, Business Analyst, Tester and Developers)
 - And what is Cucumber? Cucumber is a BDD framework. It is a tool that supports BDD. Cucumber is written in a language called Gherkin.
 - There are 2 types of file in Cucumber
@@ -686,7 +679,7 @@ Feature: End-to-end Ecommerce validation //describe a test suite
 ```
 
 **Write a step definition file**
-- It is an actual implementation.
+- It is an actual code implementation.
 - **NOTE**:
     - The `.feature` file will use steps definition from a directory with the same name as your `.feature` file.
     - There is no keyword `And` when writing step definition. So example, if `And` is used below `When` in feature file, write `When` (then your code) and then another `When` (then your code).
@@ -784,7 +777,7 @@ When (`I fill all the details into the form`, function (dataTable)
     })
 ```
 
-          
+Above is all the things I've learned so far. I've just set one foot to automation testing area and I know I will need to practice more and more. 
           
 
   
