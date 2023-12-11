@@ -56,7 +56,7 @@ npm -i init //this command helps you to create package.json file and keep hittin
 
 ***Install Cypress and make an entry for it in package.json***
 ```js
-npm cypress install --save -dev
+npm install cypress --save -dev
 ```
 
 #### 2.3/ Knows about Cypress Runner
